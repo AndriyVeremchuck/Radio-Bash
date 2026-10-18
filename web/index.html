@@ -6,18 +6,57 @@
 <meta name="referrer" content="no-referrer" />
 <meta name="color-scheme" content="dark" />
 <title>Radio-Bash — веб-термінал</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0d;--text:#ebe7de;--muted:#8f8a80;--line:#26262a;--accent:#c7a76b;--term:#101215;--term-text:#d6d9de}
+:root{--bg:#0b0b0d;--text:#ebe7de;--muted:#8f8a80;--line:#26262a;--accent:#c7a76b;--gold:#ffd700;--term:#101215;--term-text:#d6d9de}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:22px 16px 30px;color:var(--text);
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 0 40px;color:var(--text);
   font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;
   background:radial-gradient(60rem 30rem at 85% -10%,rgba(199,167,107,.13),transparent 60%),var(--bg)}
-.wrap{width:min(100%,1080px)}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;margin-bottom:22px;border-bottom:1px solid var(--line)}
-.top a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .2s}
-.top a:hover{color:var(--accent)}
-.top .brand{color:var(--text);font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
-h1{margin:0 0 6px;font:500 clamp(1.7rem,4vw,2.3rem)/1.15 "Cormorant Garamond","Playfair Display",Georgia,serif}
+.wrap{width:100%;max-width:1080px;box-sizing:border-box;padding:8px 20px 40px}
+.top-nav{position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(0);width:calc(100% - 40px);max-width:1040px;min-height:69px;z-index:1000;box-sizing:border-box;background:rgba(11,11,13,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.14);border-top:none;border-radius:0 0 16px 16px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .8s cubic-bezier(.16,1,.3,1);will-change:transform}
+.top-nav.hidden{transform:translateX(-50%) translateY(calc(-100% - 40px))}
+.top-nav::after{content:"";position:absolute;top:100%;left:0;right:0;height:35px;background:transparent}
+.top-nav-inner{padding:16px 20px;min-height:69px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative}
+.top-nav a{color:#94a3b8;text-decoration:none;font-size:13px;transition:color .2s}
+.top-nav a:hover{color:var(--gold)}
+.top-nav .brand{font-family:"Montserrat",sans-serif;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.top-nav .nav-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center}
+.top-nav .portfolio-badge{
+  font-family:"Great Vibes",cursive;
+  font-size:42px;
+  letter-spacing:.02em;
+  text-decoration:none;
+  display:inline-block;
+  line-height:1;
+  color:#ffd700;
+  transform:rotate(-3deg) scaleX(1.82) scaleY(1);
+  transform-origin:center;
+  text-shadow:0 0 14px rgba(255,215,0,.65),0 2px 14px rgba(245,158,11,.45);
+  transition:color .8s ease,text-shadow .8s ease,transform .6s cubic-bezier(.16,1,.3,1);
+}
+.top-nav .portfolio-badge:hover{
+  color:#ffd700;
+  transform:rotate(-1deg) scaleX(1.92) scaleY(1.06);
+  text-shadow:0 0 20px rgba(255,215,0,.95),0 0 34px rgba(255,215,0,.85),0 0 48px rgba(245,158,11,.6);
+  animation:slowGlowPulse 2.4s ease-in-out infinite alternate;
+}
+@media(max-width:640px){
+  .top-nav .portfolio-badge{font-size:28px}
+}
+@keyframes slowGlowPulse{
+  0%{
+    text-shadow:0 0 16px rgba(255,215,0,.8),0 0 28px rgba(245,158,11,.55);
+    color:#ffd700;
+  }
+  100%{
+    text-shadow:0 0 24px rgba(255,225,50,1),0 0 38px rgba(255,215,0,.95),0 0 54px rgba(245,158,11,.75);
+    color:#ffdf33;
+  }
+}
+h1{margin:0 0 16px;font:500 clamp(1.7rem,4vw,2.3rem)/1.15 "Cormorant Garamond","Playfair Display",Georgia,serif}
 h1 em{color:var(--accent)}
 .lead{margin:0 0 20px;color:var(--muted);font-size:14px}
 .win{border:1px solid #2b2e35;border-radius:14px;overflow:hidden;background:var(--term);box-shadow:0 30px 70px -30px rgba(0,0,0,.9),0 0 0 1px rgba(199,167,107,.06)}
@@ -42,17 +81,22 @@ pre{margin:0;padding:10px 14px;color:var(--term-text);font:14px/20px "JetBrains 
 .keys .sep{flex:1 1 20px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .note{margin:18px 0 0;color:var(--muted);font-size:13px}
-.note b{color:var(--text);font-weight:600}
-@media(max-width:640px){.title{display:none}.screen{height:clamp(380px,62vh,620px)}}
+@media(max-width:1080px){.top-nav{border-left:none;border-right:none;border-radius:0}}
+@media(max-width:640px){.wrap{padding:12px 16px 32px}.top-nav{width:calc(100% - 32px);min-height:52px}.top-nav-inner{padding:12px 16px;min-height:52px}.title{display:none}.screen{height:clamp(380px,62vh,620px)}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <nav class="top">
-    <a class="brand" href="https://andriyveremchuck.github.io/">← Andriy <span style="color:var(--accent)">Veremchuck</span></a>
+<nav class="top-nav" aria-label="Головна навігація">
+  <div class="top-nav-inner">
+    <a class="brand" href="https://andriyveremchuck.github.io/">← ANDRIY <span style="color:#ffd700">VEREMCHUCK</span></a>
+    <div class="nav-center">
+      <a class="portfolio-badge" href="https://andriyveremchuck.github.io/" aria-label="Portfolio">Portfolio</a>
+    </div>
     <a href="https://github.com/AndriyVeremchuck/Radio-Bash" target="_blank" rel="noopener">GitHub ↗</a>
-  </nav>
-  <h1>Radio-Bash <em>у браузері</em></h1>
+  </div>
+</nav>
+<div class="wrap">
+  <h1>Radio-Bash</h1>
 
   <div class="win">
     <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="title">ukraine-radio.sh — bash</div></div>
@@ -370,7 +414,7 @@ async function run(raw){
     case 'mpv':say('mpv: у веб-версії звук відтворює вбудований аудіоплеєр браузера','ye');break;
     case 'exit':
       say('logout','dim');say('Повертаємось на портфоліо...','dim');draw();
-      setTimeout(()=>{location.href="https://andriyveremchuck.github.io/"},700);break;
+      setTimeout(()=>{location.href='../'},700);break;
     default:say(`bash: ${c}: команду не знайдено`,'re');
   }
 }
@@ -462,6 +506,25 @@ async function typeCmd(t){
 })();
 
 window.__term={key:onKey,get mode(){return mode},get st(){return{Lo,pl,numBuf}}};
+})();
+
+// Автоматичний схов плашки через 1 секунду та виїзд при наведенні миші
+(()=>{
+  const nav=document.querySelector('.top-nav');
+  if(!nav)return;
+  let hideTimer=null,isHovered=false;
+  const showNav=()=>{clearTimeout(hideTimer);nav.classList.remove('hidden')};
+  const scheduleHide=(delay=1000)=>{clearTimeout(hideTimer);hideTimer=setTimeout(()=>{if(!isHovered)nav.classList.add('hidden')},delay)};
+  scheduleHide(1000);
+  nav.addEventListener('pointerenter',()=>{isHovered=true;showNav()});
+  nav.addEventListener('pointerleave',()=>{isHovered=false;scheduleHide(1000)});
+  window.addEventListener('mousemove',e=>{
+    if(e.clientY<=55)showNav();
+    else if(!isHovered&&!nav.classList.contains('hidden')&&e.clientY>85)scheduleHide(800);
+  });
+  window.addEventListener('touchstart',e=>{
+    if(e.touches[0].clientY<=55){showNav();scheduleHide(3000)}
+  },{passive:true});
 })();
 </script>
 </body>
