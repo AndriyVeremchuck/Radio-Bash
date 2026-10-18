@@ -6,7 +6,7 @@
 
 ![Приклад інтерфейсу Radio-Bash у терміналі](docs/screenshot.png)
 
-![Приклад веб-версії Radio-Bash у браузері](docs/web-screenshot.png)
+![Приклад веб-версії Radio-Bash у браузері](docs/web-screenshot-v2.png)
 
 ## 🚀 Швидкий старт
 
