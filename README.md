@@ -20,6 +20,10 @@
 
 ## 🌐 Веб-версія
 
+🌐 **Онлайн:** https://andriyveremchuck.github.io/radio-bash/ або https://radio-bash.veremchuck.workers.dev/
+
+![Веб-версія Radio-Bash](docs/web-screenshot.png)
+
 Папка [`web/`](web/) містить веб-емулятор bash: один `index.html` без залежностей і збірки. Просто відкрийте його в будь-якому браузері.
 
 **Що вміє:**
