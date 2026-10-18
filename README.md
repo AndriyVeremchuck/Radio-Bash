@@ -2,9 +2,11 @@
 
 **Radio-Bash** — Bash-скрипт для простого інтерактивного прослуховування десятків онлайн-радіостанцій України через mpv.
 
-🌐 **Веб-версія:** https://andriyveremchuck.github.io/radio-bash/
+🌐 **Веб-версія:** https://andriyveremchuck.github.io/radio-bash/ або https://radio-bash.veremchuck.workers.dev/
 
 ![Приклад інтерфейсу Radio-Bash у терміналі](docs/screenshot.png)
+
+![Приклад веб-версії Radio-Bash у браузері](docs/web-screenshot.png)
 
 ## 🚀 Швидкий старт
 
