@@ -73,13 +73,12 @@ pre{margin:0;padding:10px 14px;color:var(--term-text);font:14px/20px "JetBrains 
 .cy{color:#56d4e0}.wh{color:#fff}.gr{color:#6ee787}.bl{color:#6aa8ff}.ye{color:#f2cc60}.re{color:#ff7b72}.pu{color:#d2a8ff}.b{font-weight:700}.dim{color:#7d838d}
 .cur{background:#d6d9de;color:#101215;animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{background:transparent;color:inherit}}
-.keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.keys button,.chips button{font:600 12px ui-monospace,Menlo,Consolas,monospace;color:var(--term-text);background:#16181d;border:1px solid #2b2e35;border-radius:9px;padding:8px 12px;cursor:pointer;
+.keys{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.keys button{font:600 14.5px ui-monospace,Menlo,Consolas,monospace;color:var(--term-text);background:#16181d;border:1px solid #2b2e35;border-radius:11px;padding:10px 15px;cursor:pointer;
   transition:border-color .2s,color .2s,transform .2s}
-.keys button:hover,.chips button:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.keys button:active,.chips button:active{transform:none}
+.keys button:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.keys button:active{transform:none}
 .keys .sep{flex:1 1 20px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .note{margin:18px 0 0;color:var(--muted);font-size:13px}
 @media(max-width:1080px){.top-nav{border-left:none;border-right:none;border-radius:0}}
 @media(max-width:640px){.wrap{padding:12px 16px 32px}.top-nav{width:calc(100% - 32px);min-height:52px}.top-nav-inner{padding:12px 16px;min-height:52px}.title{display:none}.screen{height:clamp(380px,62vh,620px)}}
@@ -114,13 +113,6 @@ pre{margin:0;padding:10px 14px;color:var(--term-text);font:14px/20px "JetBrains 
     <button type="button" data-k="m">M · Звук</button>
     <button type="button" data-k="Tab">Tab · Сторінка</button>
     <button type="button" data-k="q">Q · Вихід</button>
-  </div>
-  <div class="chips" id="chips" aria-label="Швидкі команди">
-    <button type="button" data-c="./ukraine-radio.sh">./ukraine-radio.sh</button>
-    <button type="button" data-c="ls">ls</button>
-    <button type="button" data-c="cat ukraine-radio.sh">cat ukraine-radio.sh</button>
-    <button type="button" data-c="help">help</button>
-    <button type="button" data-c="clear">clear</button>
   </div>
   <p class="note"><b>Як це працює.</b> Скрипт <code>ukraine-radio.sh</code> завантажується з GitHub, звідти читається список станцій, а замість <code>mpv</code> звук відтворює аудіоплеєр браузера. Цифри 1–120 — перехід до станції, <b>Q</b> — вихід до оболонки. Деякі потоки можуть бути недоступні, а HLS (.m3u8) працює лише в Safari.</p>
 </div>
@@ -458,12 +450,6 @@ addEventListener('paste',e=>{
 });
 $('#keys').addEventListener('mousedown',e=>e.preventDefault());
 $('#keys').addEventListener('click',e=>{const b=e.target.closest('button');if(b)onKey(b.dataset.k)});
-$('#chips').addEventListener('click',async e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(mode==='tui')quitTui();
-  if(mode!=='shell')return;
-  input=b.dataset.c;await shellKey('Enter');
-});
 screen.addEventListener('click',()=>{window.focus()});
 new ResizeObserver(()=>{size();layout();draw()}).observe(screen);
 
